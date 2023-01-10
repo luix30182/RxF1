@@ -1,0 +1,6 @@
+<div id="races" *ngIf="racePerSeason$ | async as races">
+  <h2>Races</h2>
+  <div>
+    <p *ngFor="let race of races">{{ race.raceName }}</p>
+  </div>
+</div>
