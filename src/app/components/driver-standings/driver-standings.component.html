@@ -2,6 +2,7 @@
   <h2>Driver Standings</h2>
   <select
     *ngIf="racePerSeason$ | async as races"
+    [value]="selectedRace$ | async"
     (change)="selectedRace($any($event.target).value)"
   >
     <option

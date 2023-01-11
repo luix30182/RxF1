@@ -53,6 +53,12 @@ export class F1Service {
     this.offsetSubject.next(n);
   }
 
+  yearPagination$ = combineLatest([
+    this.selectedYear$,
+    this.paginationSelected$,
+    this.ofsset$,
+  ]);
+
   yearPaginationRace$ = combineLatest([
     this.selectedYear$,
     this.paginationSelected$,
@@ -60,16 +66,15 @@ export class F1Service {
     this.selectedRace$,
   ]);
 
-  driversPerSeason$: Observable<DriversResponse> =
-    this.yearPaginationRace$.pipe(
-      switchMap(([year, pagination, offset, race]) => {
-        return this.http.get<DriversResponse>(
-          `${this.baseURL}/${year}/drivers.json?limit=${pagination}&offset=${offset}`
-        );
-      })
-    );
+  driversPerSeason$: Observable<DriversResponse> = this.yearPagination$.pipe(
+    switchMap(([year, pagination, offset]) => {
+      return this.http.get<DriversResponse>(
+        `${this.baseURL}/${year}/drivers.json?limit=${pagination}&offset=${offset}`
+      );
+    })
+  );
 
-  racePerSeason$ = this.yearPaginationRace$.pipe(
+  racePerSeason$ = this.yearPagination$.pipe(
     switchMap(([year, pagination, offset]) =>
       this.http.get<RaceResponse>(
         `${this.baseURL}/${year}.json?limit=${pagination}&offset=${offset}`
@@ -98,14 +103,14 @@ export class F1Service {
     })
   );
 
-  racePerSeasonAll$ = this.yearPaginationRace$.pipe(
+  racePerSeasonAll$ = this.yearPagination$.pipe(
     switchMap(([year]) =>
       this.http.get<RaceResponse>(`${this.baseURL}/${year}.json`)
     )
   );
 
   raceQualifyingResults$ = this.yearPaginationRace$.pipe(
-    filter(([year, pagination, race]) => Boolean(race)),
+    filter(([race]) => Boolean(race)),
     switchMap(([year, pagination, offset, race]) => {
       return this.http.get<QualifyingResults>(
         `${this.baseURL}/${year}/${race}/qualifying.json?limit=${pagination}&offset=${offset}`
@@ -114,7 +119,7 @@ export class F1Service {
   );
 
   driverStandings$ = this.yearPaginationRace$.pipe(
-    filter(([year, pagination, race]) => Boolean(race)),
+    filter(([race]) => Boolean(race)),
     switchMap(([year, pagination, offset, race]) => {
       return this.http.get<DriverStandingsResult>(
         `${this.baseURL}/${year}/${race}/driverStandings.json?limit=${pagination}&offset=${offset}`

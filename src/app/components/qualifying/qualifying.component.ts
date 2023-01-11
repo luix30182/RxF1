@@ -10,6 +10,7 @@ export class QualifyingComponent {
   racePerSeason$ = this.f1Service.racePerSeasonAll$;
   paginationSelected$ = this.f1Service.paginationSelected$;
   qualifyingResult$ = this.f1Service.raceQualifyingResults$;
+  selectedRace$ = this.f1Service.selectedRace$;
 
   constructor(private f1Service: F1Service) {}
 

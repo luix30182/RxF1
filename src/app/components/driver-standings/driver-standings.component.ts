@@ -10,6 +10,7 @@ export class DriverStandingsComponent {
   racePerSeason$ = this.f1Service.racePerSeasonAll$;
   paginationSelected$ = this.f1Service.paginationSelected$;
   driverStandings$ = this.f1Service.driverStandings$;
+  selectedRace$ = this.f1Service.selectedRace$;
 
   constructor(private f1Service: F1Service) {}
 
