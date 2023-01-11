@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ResultsResponse } from '../../interfaces/f1';
-import { map } from 'rxjs';
+import { forkJoin, map, tap } from 'rxjs';
 import {
   Observable,
   BehaviorSubject,
@@ -103,10 +103,23 @@ export class F1Service {
     })
   );
 
-  racePerSeasonAll$ = this.yearPagination$.pipe(
-    switchMap(([year]) =>
+  racePerSeasonAll$ = this.selectedYear$.pipe(
+    switchMap((year) =>
       this.http.get<RaceResponse>(`${this.baseURL}/${year}.json`)
     )
+  );
+
+  allSeasonResults$ = this.racePerSeason$.pipe(
+    switchMap((result) => {
+      return forkJoin(
+        result.MRData.RaceTable.Races.map((race) =>
+          this.http.get<ResultsResponse>(
+            `${this.baseURL}/${race.season}/${race.round}/results.json`
+          )
+        )
+      );
+    }),
+    tap(console.log)
   );
 
   raceQualifyingResults$ = this.yearPaginationRace$.pipe(

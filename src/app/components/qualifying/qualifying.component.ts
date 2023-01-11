@@ -19,6 +19,7 @@ export class QualifyingComponent {
   }
 
   selectedRace(race: string) {
+    this.setOffset(0);
     this.f1Service.setRace(race);
   }
 }
