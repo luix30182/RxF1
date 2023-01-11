@@ -1,4 +1,4 @@
-<div id="races" *ngIf="racePerSeason$ | async as races">
+<div *ngIf="racePerSeason$ | async as races">
   <h2>Races with final result</h2>
   <app-season-and-pagination
     [limit]="+$any(paginationSelected$ | async)"

@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { map } from 'rxjs';
 import { F1Service } from '../../services/f1.service';
 
 @Component({

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { F1Service } from 'src/app/services/f1.service';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-season-and-pagination',

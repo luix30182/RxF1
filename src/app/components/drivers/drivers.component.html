@@ -1,4 +1,4 @@
-<div id="drivers" *ngIf="driversPerSeason$ | async as data">
+<div *ngIf="driversPerSeason$ | async as data">
   <h2>Drivers</h2>
   <app-season-and-pagination
     [limit]="+$any(paginationSelected$ | async)"
