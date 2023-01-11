@@ -11,7 +11,7 @@ export class AppComponent implements OnInit {
   title = 'RxF1';
 
   constructor(private router: Router, private f1Service: F1Service) {
-    router.events.subscribe((val) => {
+    router.events.subscribe(() => {
       this.f1Service.setOffset('0');
       this.f1Service.setPagination('10');
     });

@@ -20,7 +20,7 @@ import {
   providedIn: 'root',
 })
 export class F1Service {
-  private baseURL = 'http://ergast.com/api/f1';
+  private baseURL = 'https://ergast.com/api/f1';
 
   //Drivers
   private selectedYearSubject = new BehaviorSubject<string>('2018');
