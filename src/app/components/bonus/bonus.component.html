@@ -1,1 +1,40 @@
-<div *ngIf="seasonResults$ | async as result"></div>
+<div *ngIf="seasonResults$ | async as result">
+  <h1>Season 2011 bonus</h1>
+
+  <table>
+    <tr>
+      <th>Round</th>
+      <th>Race</th>
+      <th>Total cars</th>
+      <th>Cars Finished</th>
+      <th>Cars with accident</th>
+      <th>Cars +1 Lap</th>
+    </tr>
+    <tr *ngFor="let item of result">
+      <td>{{ item.round }}</td>
+      <td>{{ item.raceName }}</td>
+      <td>{{ item.Results.length }}</td>
+      <td>{{ getFilteredCars(item.Results, "Finished").length }}</td>
+      <td>{{ getFilteredCars(item.Results, "Accident").length }}</td>
+      <td>{{ getFilteredCars(item.Results, "+1 Lap").length }}</td>
+    </tr>
+    <tr>
+      <td>
+        Total cars Finished
+        <strong>{{ getTotalsFilter(result, "Finished") }}</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total cars Accident
+        <strong>{{ getTotalsFilter(result, "Accident") }}</strong>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Total cars +1 Lap
+        <strong>{{ getTotalsFilter(result, "+1 Lap") }}</strong>
+      </td>
+    </tr>
+  </table>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ResultsResponse } from '../../interfaces/f1';
-import { forkJoin, map, tap } from 'rxjs';
+import { forkJoin, map } from 'rxjs';
 import {
   Observable,
   BehaviorSubject,
@@ -118,8 +118,7 @@ export class F1Service {
           )
         )
       );
-    }),
-    tap(console.log)
+    })
   );
 
   raceQualifyingResults$ = this.yearPaginationRace$.pipe(
