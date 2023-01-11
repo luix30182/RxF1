@@ -1,5 +1,7 @@
 # RxF1
 
+## [Working demo](https://sage-babka-ba0a25.netlify.app/bonus)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.5.
 
 ## Development server
