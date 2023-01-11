@@ -1,7 +1,6 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { F1Service } from './services/f1.service';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +9,13 @@ import { map } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   title = 'RxF1';
-  years = [2018, 2019, 2020, 2021, 2022];
 
-  constructor(private f1Service: F1Service) {}
+  constructor(private router: Router, private f1Service: F1Service) {
+    router.events.subscribe((val) => {
+      this.f1Service.setOffset('0');
+      this.f1Service.setPagination('10');
+    });
+  }
 
   ngOnInit(): void {}
-
-  onSeasonYearSelected(year: string) {
-    this.f1Service.setYear(year);
-  }
 }

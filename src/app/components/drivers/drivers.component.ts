@@ -8,9 +8,12 @@ import { F1Service } from '../../services/f1.service';
   styleUrls: ['./drivers.component.scss'],
 })
 export class DriversComponent {
+  paginationSelected$ = this.f1Service.paginationSelected$;
+  driversPerSeason$ = this.f1Service.driversPerSeason$;
+
   constructor(private f1Service: F1Service) {}
 
-  driversPerSeason$ = this.f1Service.driversPerSeason$.pipe(
-    map((data) => data.MRData.DriverTable.Drivers)
-  );
+  setOffset(e: number) {
+    this.f1Service.setOffset(e.toString());
+  }
 }

@@ -1,8 +1,24 @@
-<div id="drivers" *ngIf="driversPerSeason$ | async as drivers">
+<div id="drivers" *ngIf="driversPerSeason$ | async as data">
   <h2>Drivers</h2>
-  <p *ngFor="let driver of drivers">
-    {{ driver.givenName | titlecase }} {{ driver.familyName | titlecase }} #{{
-      driver.permanentNumber
-    }}
-  </p>
+  <app-season-and-pagination
+    [limit]="+$any(paginationSelected$ | async)"
+    [offset]="+data.MRData.offset"
+    [total]="+data.MRData.total"
+    (offsetChange)="setOffset($event)"
+  ></app-season-and-pagination>
+
+  <table>
+    <tr>
+      <th>Number</th>
+      <th>Name</th>
+      <th>Nationality</th>
+    </tr>
+    <tr *ngFor="let driver of data.MRData.DriverTable.Drivers">
+      <td># {{ driver.permanentNumber }}</td>
+      <td>
+        {{ driver.givenName | titlecase }} {{ driver.familyName | titlecase }}
+      </td>
+      <td>{{ driver.nationality }}</td>
+    </tr>
+  </table>
 </div>

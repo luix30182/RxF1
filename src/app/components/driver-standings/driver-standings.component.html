@@ -1,0 +1,50 @@
+<div id="races">
+  <h2>Driver Standings</h2>
+  <select
+    *ngIf="racePerSeason$ | async as races"
+    (change)="selectedRace($any($event.target).value)"
+  >
+    <option
+      *ngFor="let race of races.MRData.RaceTable.Races"
+      [value]="race.round"
+    >
+      {{ race.raceName }}
+    </option>
+  </select>
+
+  <ng-container *ngIf="driverStandings$ | async as dresults">
+    <app-season-and-pagination
+      [limit]="+$any(paginationSelected$ | async)"
+      [offset]="+dresults.MRData.offset"
+      [total]="+dresults.MRData.total"
+      (offsetChange)="setOffset($event)"
+    ></app-season-and-pagination>
+    <table>
+      <tr>
+        <th>Position</th>
+        <th>Points</th>
+        <th>Wins</th>
+        <th>Driver</th>
+        <th>Constructor</th>
+      </tr>
+      <tr
+        *ngFor="
+          let result of dresults.MRData.StandingsTable.StandingsLists[0]
+            .DriverStandings
+        "
+      >
+        <td>
+          {{ result.position }}
+        </td>
+        <td>
+          {{ result.points }}
+        </td>
+        <td>
+          {{ result.wins }}
+        </td>
+        <td>{{ result.Driver.givenName }} {{ result.Driver.familyName }}</td>
+        <td>{{ result.Constructors[0].name }}</td>
+      </tr>
+    </table>
+  </ng-container>
+</div>

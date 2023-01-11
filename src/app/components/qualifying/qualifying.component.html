@@ -1,0 +1,47 @@
+<div id="races">
+  <h2>Qualifying Results</h2>
+  <select
+    *ngIf="racePerSeason$ | async as races"
+    (change)="selectedRace($any($event.target).value)"
+  >
+    <option
+      *ngFor="let race of races.MRData.RaceTable.Races"
+      [value]="race.round"
+    >
+      {{ race.raceName }}
+    </option>
+  </select>
+
+  <ng-container *ngIf="qualifyingResult$ | async as qresults">
+    <app-season-and-pagination
+      [limit]="+$any(paginationSelected$ | async)"
+      [offset]="+qresults.MRData.offset"
+      [total]="+qresults.MRData.total"
+      (offsetChange)="setOffset($event)"
+    ></app-season-and-pagination>
+    <table>
+      <tr>
+        <th>Position</th>
+        <th>Driver</th>
+        <th>Constructor</th>
+        <th>Q1</th>
+        <th>Q2</th>
+        <th>Q3</th>
+      </tr>
+      <tr
+        *ngFor="
+          let result of qresults.MRData.RaceTable.Races[0].QualifyingResults
+        "
+      >
+        <td>
+          {{ result.position }}
+        </td>
+        <td>{{ result.Driver.givenName }} {{ result.Driver.familyName }}</td>
+        <td>{{ result.Constructor.name }}</td>
+        <td>{{ result.Q1 }}</td>
+        <td>{{ result.Q2 }}</td>
+        <td>{{ result.Q3 }}</td>
+      </tr>
+    </table>
+  </ng-container>
+</div>

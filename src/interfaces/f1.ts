@@ -1,17 +1,11 @@
-interface BaseResponse {
-  limit: string;
-  offset: string;
-  series: string;
-  total: string;
-  url: string;
-  xmlns: string;
-}
-
-export interface DriversResponse extends BaseResponse {
+export interface DriversResponse {
   MRData: {
     DriverTable: {
       Drivers: Driver[];
     };
+    limit: string;
+    offset: string;
+    total: string;
   };
 }
 
@@ -32,6 +26,9 @@ export interface RaceResponse {
       season: string;
       Races: RaceElement[];
     };
+    limit: string;
+    offset: string;
+    total: string;
   };
 }
 
@@ -43,6 +40,7 @@ export interface RaceElement {
   Circuit: Circuit;
   date: string;
   time: string;
+  finalResult: any;
 }
 
 export interface Circuit {
@@ -59,13 +57,16 @@ export interface Location {
   country: string;
 }
 
-export interface ResultsResponse extends BaseResponse {
+export interface ResultsResponse {
   MRData: {
     RaceTable: {
       season: string;
       round: string;
       Races: Race[];
     };
+    limit: string;
+    offset: string;
+    total: string;
   };
 }
 
@@ -77,7 +78,8 @@ export interface Race {
   Circuit: Circuit;
   date: string;
   time: string;
-  Results: Result[];
+  Results?: Result[];
+  QualifyingResults?: QualifyingResult[];
 }
 
 export interface Result {
@@ -120,4 +122,55 @@ export interface FastestLapTime {
 export interface ResultTime {
   millis: string;
   time: string;
+}
+
+export interface QualifyingResults {
+  MRData: {
+    RaceTable: {
+      season: string;
+      round: string;
+      Races: Race[];
+    };
+    limit: string;
+    offset: string;
+    total: string;
+  };
+}
+
+export interface QualifyingResult {
+  number: string;
+  position: string;
+  Driver: Driver;
+  Constructor: Constructor;
+  Q1: string;
+  Q2?: string;
+  Q3?: string;
+}
+
+export interface DriverStandingsResult {
+  MRData: {
+    StandingsTable: {
+      season: string;
+      round: string;
+      StandingsLists: StandingsList[];
+    };
+    limit: string;
+    offset: string;
+    total: string;
+  };
+}
+
+export interface StandingsList {
+  season: string;
+  round: string;
+  DriverStandings: DriverStanding[];
+}
+
+export interface DriverStanding {
+  position: string;
+  positionText: string;
+  points: string;
+  wins: string;
+  Driver: Driver;
+  Constructors: Constructor[];
 }

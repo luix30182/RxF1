@@ -1,0 +1,21 @@
+<label>Season </label>
+<select
+  name="season"
+  id="season"
+  (change)="onSeasonYearSelected($any($event.target).value)"
+>
+  <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+</select>
+<label for="pagination">Pagination</label>
+<select
+  name="pagination"
+  id="pagination"
+  (change)="onPaginationSelected($any($event.target).value)"
+>
+  <option *ngFor="let p of pagination" [value]="p">{{ p }}</option>
+</select>
+
+<ng-container *ngIf="total > limit">
+  <button *ngIf="+offset !== 0" (click)="prev()">prev</button>
+  <button *ngIf="+offset + +limit < +total" (click)="next()">Next</button>
+</ng-container>
